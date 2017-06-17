@@ -1,7 +1,4 @@
-import petlib
-from petlib.bn import Bn
-from petlib.ec import EcGroup, Bn, EcPt
-from binascii import hexlify, unhexlify
+from petlib.ec import Bn
 from hashlib import sha256
 import msgpack
 import utils

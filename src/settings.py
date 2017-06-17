@@ -1,4 +1,4 @@
-DB_LOCATION = '~/oblipay/ObliviousPayments.db'
+DB_LOCATION = 'ObliviousPayments.db'
 
 # Flask secret key to sign cookies for sessions
 # Generate this randomly.

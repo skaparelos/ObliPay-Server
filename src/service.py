@@ -174,19 +174,19 @@ def _ACLValidation1(params, sessionid, z1, z2, db):
 import settings
 def ACLValidation2(params, sessionid, encoded, db, keys):
     # 50 for GID=713, 55 for GID=714, 75 for GID=715, 100 for GID=716
-    len = 50
+    length = 50
     if settings.SERVER_GID == 713:
-        len = 50
+        length = 50
     elif settings.SERVER_GID == 714:
-        len = 55
+        length = 55
     elif settings.SERVER_GID == 715:
-        len = 75
+        length = 75
     elif settings.SERVER_GID == 716:
-        len = 100
+        length = 100
 
     # This check basically distinguishes if the sender sends 2 things or one
     # i.e. if we are in a splitACL phase or not
-    if len(encoded) < len:
+    if len(encoded) < length:
         (msg_to_issuer,) = crypto.unmarshall(encoded)
 
         issuer_state = database.getIssuerState(sessionid, db)
@@ -225,6 +225,15 @@ def ACLVerify(params, encoded, db, keys, innerCall=False):
     else:
         encoded = crypto.marshall([m])
         return encoded
+
+
+def ACLDoubleSpent(params, encoded):
+    toPack = [issuer_pub, numAttr, signature, sig]
+    encoded_coin = crypto.marshall(toPack)
+
+    if ACLVerify(params, encoded_coin, db, keys, innerCall=True) == False:
+        return "ACL verification failed due to double spending."
+    return False
 
 
 def _saveSessionid(sessionid, db):

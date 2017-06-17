@@ -1,13 +1,9 @@
-from flask import Flask, flash, redirect, url_for, request, session
-from flask import render_template, make_response # This is to be able to use templating
+from flask import Flask, request, session
 from wtforms import Form, StringField, validators
-import os, sys
+import os
 import service
 import database
-import random
-from petlib.bn import Bn
-from petlib.ec import EcGroup, EcPt
-
+from petlib.ec import EcGroup
 import settings
 
 app=Flask(__name__)
@@ -26,6 +22,7 @@ def BL_setup(Gid = settings.SERVER_GID):
 
 
 params = BL_setup()
+
 
 import crypto
 def _loadKeys(_keys = settings.SERVER_KEYS):
@@ -108,6 +105,11 @@ def acl(phase=None):
         elif phase == "spend":
             data = form.data.data
             response = service.ACLSpend(params, data)
+            dbConn.close()
+            return str(response)
+        elif phase == "doubleSpent":
+            data = form.data.data
+            response = service.ACLDoubleSpent(params, data)
             dbConn.close()
             return str(response)
         else:
