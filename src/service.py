@@ -228,12 +228,13 @@ def ACLVerify(params, encoded, db, keys, innerCall=False):
 
 
 def ACLDoubleSpent(params, encoded):
-    toPack = [issuer_pub, numAttr, signature, sig]
-    encoded_coin = crypto.marshall(toPack)
+    #toPack = [issuer_pub, numAttr, signature, sig]
+    #encoded_coin = crypto.marshall(toPack)
 
-    if ACLVerify(params, encoded_coin, db, keys, innerCall=True) == False:
-        return "ACL verification failed due to double spending."
-    return False
+    #if ACLVerify(params, encoded_coin, db, keys, innerCall=True) == False:
+    #    return "ACL verification failed due to double spending."
+    #return False
+    pass
 
 
 def _saveSessionid(sessionid, db):

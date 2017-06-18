@@ -5,6 +5,7 @@ import service
 import database
 from petlib.ec import EcGroup
 import settings
+import json
 
 app=Flask(__name__)
 app.secret_key = settings.FLASK_SECRET_KEY
@@ -52,7 +53,9 @@ import base64
 @app.route('/session/')
 def _session():
     session['id'] = base64.b64encode(os.urandom(128))
-    return session['id']
+    d = {}
+    d["sessionId"] = session['id']
+    return json.dumps(d)
 
 
 @app.route('/acl/')
